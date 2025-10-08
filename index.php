@@ -50,6 +50,8 @@
 		<h1 class="text-3xl font-extrabold text-indigo-400 text-center mb-6">Unit Converter</h1>
 		<p class="text-sm text-gray-400 text-center">Select a category and enter a value to convert.</p>
 		 <form id="unitConverter">
+			<!-- Hidden input to store selected category -->
+			<input type="hidden" id="selected-category" name="selected-category" value="">
 			<!-- Category selector -->
 			<div id="category-selector" class="flex flex-wrap gap-2 justify-center p-3 bg-gray-700 rounded-lg shadow-inner">
 				<!-- Category will inject from javascript -->
@@ -123,7 +125,9 @@
     })
     .then(res => res.text())
     .then(data => {
-        document.getElementById("output-value").innerHTML = data;
+		document.getElementById("output-value").value = ' ';
+        document.getElementById("output-value").value = data;
+		console.log(data);
     });
 });
 	let categories ={
@@ -156,28 +160,31 @@
 	const swapButton = document.getElementById('swap-button');
 	let selectedCategory = null;
 	//Initilize category buttons
-	let currentCategoryKey = 'Length';
+	let currentCategoryKey = 'length';
 	function initializeCategorySelector() {
 		categorySelector.innerHtml = '';
 		Object.entries(categories).forEach(([key, category]) => {
-			const button = document.createElement('button');
-			button.type = 'button';
-			button.textContent = category.label;
-			button.className = 'px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-indigo-600 hover:text-white transition duration-200';
-			button.addEventListener('click', () => {
+			const input = document.createElement('input');
+			input.type = 'button';
+			input.value = category.label;
+			input.className = 'px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-indigo-600 hover:text-white transition duration-200';
+			input.addEventListener('click', () => {
 				selectCategory(key);
 			});
-			categorySelector.appendChild(button);
+			categorySelector.appendChild(input);
 			if (key === currentCategoryKey) {
 				selectCategory(key);
 			}
 		});
 	}
 	initializeCategorySelector();
+	// Set initial category value
+	document.getElementById('selected-category').value = currentCategoryKey;
 	//Select category
 	function selectCategory(key) {
 		selectedCategory = categories[key];
 		currentCategoryKey = key;
+		document.getElementById('selected-category').value = key;
 		updateUnitSelectors();
 		highlightSelectedCategory();
 	}
@@ -201,6 +208,7 @@
 			selectedCategory.units.forEach(unit => {
 				const option1 = document.createElement('option');
 				option1.value = unit;
+				option1.name = unit;
 				option1.textContent = unit;
 				baseUnitSelect.appendChild(option1);
 				const option2 = document.createElement('option');
