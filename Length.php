@@ -7,8 +7,8 @@ class Length
         "centimeter" => 0.01,
         "millimeter" => 0.001,
         "mile"       => 1609.34,
-        "yard"       => 0.9114,
-        "food"       => 0.3048,
+        "yard"       => 0.9144,
+        "foot"       => 0.3048,
         "inch"       => 0.0254,
     ];
     public function lengthConverter($value, $fromUnit, $toUnit)

@@ -3,7 +3,7 @@
 A simple, modern unit converter built with PHP for the backend and a Tailwind-powered UI on the frontend. Convert between common units for length, weight, temperature, volume, and area.
 
 ## Project URL
--https://roadmap.sh/projects/unit-converter
+- https://roadmap.sh/projects/unit-converter
 ## Features
 
 - Modern, responsive UI (Tailwind via CDN)
@@ -16,12 +16,12 @@ A simple, modern unit converter built with PHP for the backend and a Tailwind-po
 ```
 UnitConverter/
 ├─ index.php           # Frontend UI (Tailwind + vanilla JS)
-├─ function.php        # Backend endpoint (expects POST; implement logic here)
-├─ Length.php          # (optional) Length conversion class
-├─ Weight.php          # (optional) Weight conversion class
-├─ Temperature.php     # (optional) Temperature conversion class
-├─ Volume.php          # (optional) Volume conversion class
-└─ Area.php            # Area conversion class (implemented)
+├─ function.php        # Backend endpoint with full conversion logic
+├─ Length.php          # Length conversion class
+├─ Weight.php          # Weight conversion class
+├─ Temperature.php     # Temperature conversion class
+├─ Volume.php          # Volume conversion class
+└─ Area.php            # Area conversion class
 ```
 
 ## Requirements
@@ -58,57 +58,15 @@ The UI submits a POST request to `function.php` with the form data and writes th
 
 Response is expected to be plain text containing the converted value.
 
-### Implementing `function.php`
+### Backend Implementation
 
-This repository includes `Area.php` with a working `Area::convert($value, $fromUnit, $toUnit)` method. You can implement similar classes for the other categories (or handle them directly in `function.php`). Below is a minimal example of how `function.php` can route a request to conversion classes:
+The `function.php` file includes a complete implementation that:
+- Validates all input parameters
+- Routes requests to appropriate converter classes
+- Handles errors gracefully with proper HTTP status codes
+- Supports all five conversion categories (Length, Weight, Temperature, Volume, Area)
 
-```php
-<?php
-require_once __DIR__ . '/Area.php';
-// require_once __DIR__ . '/Length.php';
-// require_once __DIR__ . '/Weight.php';
-// require_once __DIR__ . '/Temperature.php';
-// require_once __DIR__ . '/Volume.php';
-
-header('Content-Type: text/plain; charset=utf-8');
-
-$value = isset($_POST['base-value']) ? (float) $_POST['base-value'] : null;
-$from  = $_POST['base-unit'] ?? null;
-$to    = $_POST['to-unit'] ?? null;
-
-if ($value === null || $from === null || $to === null) {
-    http_response_code(400);
-    echo 'Invalid request';
-    exit;
-}
-
-// Very simple router based on which units are provided
-try {
-    $result = null;
-
-    // Area (provided):
-    if (in_array($from, array_keys(Area::$conversionRates), true) && in_array($to, array_keys(Area::$conversionRates), true)) {
-        $result = Area::convert($value, $from, $to);
-    }
-
-    // TODO: add other categories similarly once classes are implemented
-    // Example pattern:
-    // if (in_array($from, array_keys(Length::$conversionRates), true) && in_array($to, array_keys(Length::$conversionRates), true)) {
-    //     $result = Length::convert($value, $from, $to);
-    // }
-
-    if ($result === null) {
-        http_response_code(422);
-        echo 'Unsupported unit combination';
-        exit;
-    }
-
-    echo $result;
-} catch (Throwable $e) {
-    http_response_code(500);
-    echo 'Conversion error';
-}
-```
+All converter classes are fully implemented and ready to use.
 
 ## Supported Categories and Units (UI)
 
@@ -118,18 +76,18 @@ try {
 - **Volume**: Liter, Milliliter, Cubic Meter, Cubic Centimeter, Gallon, Quart, Pint, Cup, Fluid Ounce
 - **Area**: Square Meter, Square Kilometer, Square Mile, Acre, Hectare
 
-Note: The UI already lists these units. Make sure your backend supports the selected units (e.g., by adding `Length.php`, `Weight.php`, etc., modeled on `Area.php`).
+All units listed above are fully supported by the backend converter classes.
 
 ## Development
 
 - UI lives in `index.php` and uses Tailwind CDN; tweak classes/styles inline.
 - Add or adjust unit lists in the `categories` object inside `index.php`.
-- Implement additional conversion classes mirroring the interface in `Area.php`.
+- All conversion classes are implemented and follow consistent patterns.
 
 ## Contributing
 
 Issues and PRs are welcome. If you add a new category, please include:
-- A conversion class with a `convert($value, $fromUnit, $toUnit)` method
+- A conversion class with appropriate conversion methods
 - Unit tests or examples
 - README updates
 

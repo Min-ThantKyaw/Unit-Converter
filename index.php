@@ -8,13 +8,13 @@
 	<style>
 		body {
 			font-family: 'Inter', sans-serif;
-			-webki-font-smoothing: antialiased;
+			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
 			background-color: #1a202c;
 			color: #e2e8f0
 		}
 		.custom-scroll::-webkit-scrollbar {
-			with: 8px;
+			width: 8px;
 		}
 		.custom-scroll::-webkit-scrollbar-thumb {
 			background-color: #4a5568;
@@ -76,7 +76,7 @@
 					id="swap-button"
 					type="button"
 					onclick="handle_swap()"
-					class="p-2 big-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-500 transition duration-300 hover:scale-105"
+					class="p-2 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-500 transition duration-300 hover:scale-105"
 					title="Swap units">
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
@@ -126,8 +126,7 @@
     })
     .then(res => res.text())
     .then(data => {
-		document.getElementById("output-value").value = ' ';
-        document.getElementById("output-value").value = data;
+		document.getElementById("output-value").value = data;
 		console.log(data);
     });
 });
@@ -163,7 +162,7 @@
 	//Initilize category buttons
 	let currentCategoryKey = 'length';
 	function initializeCategorySelector() {
-		categorySelector.innerHtml = '';
+		categorySelector.innerHTML = '';
 		Object.entries(categories).forEach(([key, category]) => {
 			const input = document.createElement('input');
 			input.type = 'button';

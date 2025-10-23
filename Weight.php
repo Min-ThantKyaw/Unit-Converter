@@ -1,12 +1,11 @@
 <?php
 	class Weight {
 		private $baseUnits = [
-			"gram"       => 1,
-			"kilogram"   => 1000,
-			"milligram"  => 0.001,
-			"pound"      => 453.592,
-			"ounce"      => 28.3495,
-			"ton"        => 907184.74,
+			"kilogram"   => 1,
+			"gram"       => 0.001,
+			"milligram"  => 0.000001,
+			"pound"      => 0.453592,
+			"ounce"      => 0.0283495,
 		];
 
 		public function weightConverter($value, $fromUnit, $toUnit) {

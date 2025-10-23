@@ -1,14 +1,15 @@
 <?php
 	class Volume {
 		public static $conversionRates = [
-			"Cubic Meter" => 1,
-			"Cubic Kilometer" => 1e9,
-			"Cubic Centimeter" => 1e-6,
-			"Liter" => 0.001,
-			"Milliliter" => 1e-6,
-			"Cubic Foot" => 0.0283168,
-			"Cubic Inch" => 1.6387e-5,
-			"Gallon" => 0.00378541,
+			"Liter" => 1,
+			"Milliliter" => 0.001,
+			"Cubic Meter" => 1000,
+			"Cubic Centimeter" => 0.001,
+			"Gallon" => 3.78541,
+			"Quart" => 0.946353,
+			"Pint" => 0.473176,
+			"Cup" => 0.236588,
+			"Fluid Ounce" => 0.0295735,
 		];
 
 		public static function volumeConverter($value, $fromUnit, $toUnit) {
